@@ -45,6 +45,7 @@ from train_yolo_v7_instance_segmentation.yolov7.seg.utils.loggers.wandb.wandb_ut
 from train_yolo_v7_instance_segmentation.yolov7.seg.segment.train import train
 from datetime import datetime
 
+
 logger = logging.getLogger(__name__)
 
 

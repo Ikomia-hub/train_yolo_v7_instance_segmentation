@@ -429,40 +429,7 @@ def train(hyp, opt, device, on_epoch_end, callbacks):  # hyp is path/to/hyp.yaml
 
         # end epoch ----------------------------------------------------------------------------------------------------
     # end training -----------------------------------------------------------------------------------------------------
-    if RANK in {-1, 0}:
-        LOGGER.info(f'\n{epoch - start_epoch + 1} epochs completed in {(time.time() - t0) / 3600:.3f} hours.')
-        for f in last, best:
-            if f.exists():
-                #strip_optimizer(f)  # strip optimizers
-                if f is best:
-                    LOGGER.info(f'\nValidating {f}...')
-                    results, _, _ = validate.run(
-                        data_dict,
-                        batch_size=batch_size // WORLD_SIZE * 2,
-                        imgsz=imgsz,
-                        model=attempt_load(f, device).half(),
-                        iou_thres=0.65 if is_coco else 0.60,  # best pycocotools at iou 0.65
-                        single_cls=single_cls,
-                        dataloader=val_loader,
-                        save_dir=save_dir,
-                        save_json=is_coco,
-                        verbose=True,
-                        plots=plots,
-                        callbacks=callbacks,
-                        compute_loss=compute_loss,
-                        mask_downsample_ratio=mask_ratio,
-                        overlap=overlap)  # val best model with plots
-                    if is_coco:
-                        # callbacks.run('on_fit_epoch_end', list(mloss) + list(results) + lr, epoch, best_fitness, fi)
-                        metrics_dict = dict(zip(KEYS, list(mloss) + list(results) + lr))
-                        logger.log_metrics(metrics_dict, epoch)
 
-        # callbacks.run('on_train_end', last, best, epoch, results)
-        # on train end callback using genericLogger
-        logger.log_metrics(dict(zip(KEYS[4:16], results)), epochs + 1)
-
-        if not opt.evolve:
-            logger.log_model(best, epoch + 1)
         if plots:
             plot_results_with_masks(file=save_dir / 'results.csv')  # save results.png
             files = ['results.png', 'confusion_matrix.png', *(f'{x}_curve.png' for x in ('F1', 'PR', 'P', 'R'))]
