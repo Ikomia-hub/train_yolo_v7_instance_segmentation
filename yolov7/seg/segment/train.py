@@ -122,7 +122,11 @@ def train(hyp, opt, device, on_epoch_end, callbacks):  # hyp is path/to/hyp.yaml
     if pretrained:
         with torch_distributed_zero_first(LOCAL_RANK):
             weights = attempt_download(weights)  # download if not found locally
+        yolov7_folder = os.path.join(os.path.dirname(os.path.dirname(__file__)))
+        sys.path.append(yolov7_folder)
         ckpt = torch_load(weights, 'cpu')  # load checkpoint to CPU to avoid CUDA memory leak
+        if yolov7_folder in sys.path:
+            sys.path.remove(yolov7_folder)
         model = SegmentationModel(cfg or ckpt['model'].yaml, ch=3, nc=nc, anchors=hyp.get('anchors')).to(device)
         exclude = ['anchor'] if (cfg or hyp.get('anchors')) and not resume else []  # exclude keys
         csd = ckpt['model'].float().state_dict()  # checkpoint state_dict as FP32

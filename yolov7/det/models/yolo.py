@@ -20,12 +20,12 @@ ROOT = FILE.parents[1]  # YOLOv5 root directory
 if platform.system() != 'Windows':
     ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
-from models.common import *
-from models.experimental import *
-from utils.autoanchor import check_anchor_order
-from utils.general import LOGGER, check_version, check_yaml, make_divisible, print_args
-from utils.plots import feature_visualization
-from utils.torch_utils import (fuse_conv_and_bn, initialize_weights, model_info, profile, scale_img, select_device,
+from train_yolo_v7_instance_segmentation.yolov7.seg.models.common import *
+from train_yolo_v7_instance_segmentation.yolov7.seg.models.experimental import *
+from train_yolo_v7_instance_segmentation.yolov7.seg.utils.autoanchor import check_anchor_order
+from train_yolo_v7_instance_segmentation.yolov7.seg.utils.general import LOGGER, check_version, check_yaml, make_divisible, print_args
+from train_yolo_v7_instance_segmentation.yolov7.seg.utils.plots import feature_visualization
+from train_yolo_v7_instance_segmentation.yolov7.seg.utils.torch_utils import (fuse_conv_and_bn, initialize_weights, model_info, profile, scale_img, select_device,
                                time_sync)
 
 try:

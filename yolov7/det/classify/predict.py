@@ -19,11 +19,11 @@ ROOT = FILE.parents[1]  # YOLOv5 root directory
 
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
-from classify.train import imshow_cls
-from models.common import DetectMultiBackend
-from utils.augmentations import classify_transforms
-from utils.general import LOGGER, check_requirements, colorstr, increment_path, print_args
-from utils.torch_utils import select_device, smart_inference_mode, time_sync
+from train_yolo_v7_instance_segmentation.yolov7.seg.classify.train import imshow_cls
+from train_yolo_v7_instance_segmentation.yolov7.seg.models.common import DetectMultiBackend
+from train_yolo_v7_instance_segmentation.yolov7.seg.utils.augmentations import classify_transforms
+from train_yolo_v7_instance_segmentation.yolov7.seg.utils.general import LOGGER, check_requirements, colorstr, increment_path, print_args
+from train_yolo_v7_instance_segmentation.yolov7.seg.utils.torch_utils import select_device, smart_inference_mode, time_sync
 
 
 @smart_inference_mode()

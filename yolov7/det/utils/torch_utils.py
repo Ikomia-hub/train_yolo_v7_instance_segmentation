@@ -65,7 +65,7 @@ def smart_DDP(model):
 
 def reshape_classifier_output(model, n=1000):
     # Update a TorchVision classification model to class count 'n' if required
-    from models.common import Classify
+    from train_yolo_v7_instance_segmentation.yolov7.seg.models.common import Classify
     name, m = list((model.model if hasattr(model, 'model') else model).named_children())[-1]  # last module
     if isinstance(m, Classify):  # YOLOv5 Classify() head
         if m.linear.out_features != n:

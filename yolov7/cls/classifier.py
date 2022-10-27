@@ -33,7 +33,7 @@ import torch.optim.lr_scheduler as lr_scheduler
 import torchvision
 from torch.cuda import amp
 from tqdm import tqdm
-from models.yolo import Model
+from train_yolo_v7_instance_segmentation.yolov7.seg.models.yolo import Model
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -114,7 +114,7 @@ def train(opt, device):
             LOGGER.info('\nAvailable models. Usage: python classifier.py --model MODEL\n' + '\n'.join(m))
             return
         elif opt.model.startswith('yolov5'):  # YOLOv5 models, i.e. yolov5s, yolov5m
-            from models.yolo import ClassificationModel
+            from train_yolo_v7_instance_segmentation.yolov7.seg.models.yolo import ClassificationModel
             #model = smart_hub_load(repo1,
             #                       opt.model,
             #                       pretrained=pretrained,
@@ -125,7 +125,7 @@ def train(opt, device):
             model = ClassificationModel(model=model, nc=nc, cutoff=opt.cutoff or 10)  # classification model
             #print(model)
         elif opt.model.startswith('yolov7'):  # YOLOv5 models, i.e. yolov5s, yolov5m
-            from models.yolo import ClassificationModel
+            from train_yolo_v7_instance_segmentation.yolov7.seg.models.yolo import ClassificationModel
             model = Model('models/yolov7.yaml', ch=3, nc=80, anchors=3).to(device)
             #print(model.save)
             model = ClassificationModel(model=model, nc=nc, cutoff=opt.cutoff or 52)  # classification model

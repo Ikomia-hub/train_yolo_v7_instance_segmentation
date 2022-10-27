@@ -26,12 +26,12 @@ import torch
 import torch.nn as nn
 from tensorflow import keras
 
-from models.common import (C3, SPP, SPPF, Bottleneck, BottleneckCSP, C3x, Concat, Conv, CrossConv, DWConv,
+from train_yolo_v7_instance_segmentation.yolov7.seg.models.common import (C3, SPP, SPPF, Bottleneck, BottleneckCSP, C3x, Concat, Conv, CrossConv, DWConv,
                            DWConvTranspose2d, Focus, autopad)
-from models.experimental import MixConv2d, attempt_load
-from models.yolo import Detect
-from utils.activations import SiLU
-from utils.general import LOGGER, make_divisible, print_args
+from train_yolo_v7_instance_segmentation.yolov7.seg.models.experimental import MixConv2d, attempt_load
+from train_yolo_v7_instance_segmentation.yolov7.seg.models.yolo import Detect
+from train_yolo_v7_instance_segmentation.yolov7.seg.utils.activations import SiLU
+from train_yolo_v7_instance_segmentation.yolov7.seg.utils.general import LOGGER, make_divisible, print_args
 
 
 class TFBN(keras.layers.Layer):
