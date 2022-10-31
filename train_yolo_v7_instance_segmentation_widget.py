@@ -18,7 +18,8 @@
 
 from ikomia import core, dataprocess
 from ikomia.utils import pyqtutils, qtconversion
-from train_yolo_v7_instance_segmentation.train_yolo_v7_instance_segmentation_process import TrainYoloV7InstanceSegmentationParam
+from train_yolo_v7_instance_segmentation.train_yolo_v7_instance_segmentation_process import \
+    TrainYoloV7InstanceSegmentationParam
 from train_yolo_v7_instance_segmentation.ikutils import model_zoo
 
 # PyQt GUI framework
@@ -64,6 +65,11 @@ class TrainYoloV7InstanceSegmentationWidget(core.CWorkflowTaskWidget):
 
         # Batch size
         self.spin_batch = pyqtutils.append_spin(self.grid_layout, "Batch size", self.parameters.cfg["batch_size"])
+
+        # Split ratio
+        self.spin_dataset_split_ratio = pyqtutils.append_spin(self.grid_layout, "Split train/test",
+                                                              self.parameters.cfg["dataset_split_ratio"],
+                                                              min=1, max=100)
 
         # Input size
         self.spin_train_imgsz = pyqtutils.append_spin(self.grid_layout, "Train image size",
@@ -116,6 +122,7 @@ class TrainYoloV7InstanceSegmentationWidget(core.CWorkflowTaskWidget):
         self.parameters.cfg["train_imgsz"] = self.spin_train_imgsz.value()
         self.parameters.cfg["test_imgsz"] = self.spin_test_imgsz.value()
         self.parameters.cfg["coco_pretrain"] = self.check_coco_pretrain.isChecked()
+        self.parameters.cfg["dataset_split_ratio"] = self.spin_dataset_split_ratio.value()
 
         if self.check_hyp.isChecked():
             self.parameters.cfg["custom_hyp_file"] = self.browse_hyp_file.path

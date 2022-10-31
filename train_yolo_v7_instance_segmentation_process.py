@@ -71,7 +71,7 @@ class TrainYoloV7InstanceSegmentationParam(TaskParam):
         self.cfg["batch_size"] = 4
         self.cfg["train_imgsz"] = 640
         self.cfg["test_imgsz"] = 640
-        self.cfg["dataset_split_ratio"] = 0.9
+        self.cfg["dataset_split_ratio"] = 90
         self.cfg["custom_hyp_file"] = ""
         self.cfg["output_folder"] = os.path.dirname(os.path.realpath(__file__)) + "/runs/"
 
@@ -84,7 +84,7 @@ class TrainYoloV7InstanceSegmentationParam(TaskParam):
         self.cfg["batch_size"] = int(param_map["batch_size"])
         self.cfg["train_imgsz"] = int(param_map["train_imgsz"])
         self.cfg["test_imgsz"] = int(param_map["test_imgsz"])
-        self.cfg["dataset_split_ratio"] = float(param_map["dataset_split_ratio"])
+        self.cfg["dataset_split_ratio"] = int(param_map["dataset_split_ratio"])
         self.cfg["custom_hyp_file"] = param_map["custom_hyp_file"]
         self.cfg["output_folder"] = param_map["output_folder"]
 
@@ -120,7 +120,7 @@ class TrainYoloV7InstanceSegmentation(dnntrain.TrainProcess):
         # Conversion from Ikomia dataset to YoloV5
         print("Preparing dataset...")
         dataset_yaml = prepare_dataset(dataset_input, param.cfg["dataset_folder"],
-                                       param.cfg["dataset_split_ratio"])
+                                       param.cfg["dataset_split_ratio"]/100)
 
         print("Collecting configuration parameters...")
         self.opt = self.load_config(dataset_yaml)
