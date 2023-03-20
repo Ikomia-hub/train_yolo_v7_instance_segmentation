@@ -75,7 +75,7 @@ class TrainYoloV7InstanceSegmentationParam(TaskParam):
         self.cfg["custom_hyp_file"] = ""
         self.cfg["output_folder"] = os.path.dirname(os.path.realpath(__file__)) + "/runs/"
 
-    def setParamMap(self, param_map):
+    def set_values(self, param_map):
         self.cfg["dataset_folder"] = param_map["dataset_folder"]
         self.cfg["model_name"] = param_map["model_name"]
         self.cfg["coco_pretrain"] = strtobool(param_map["coco_pretrain"])
@@ -98,24 +98,24 @@ class TrainYoloV7InstanceSegmentation(dnntrain.TrainProcess):
     def __init__(self, name, param):
         dnntrain.TrainProcess.__init__(self, name, param)
         # Add input/output of the process here
-        # Example :  self.addInput(dataprocess.CImageIO())
-        #           self.addOutput(dataprocess.CImageIO())
+        # Example :  self.add_input(dataprocess.CImageIO())
+        #           self.add_output(dataprocess.CImageIO())
 
         # Create parameters class
         self.opt = None
         if param is None:
-            self.setParam(TrainYoloV7InstanceSegmentationParam())
+            self.set_param_object(TrainYoloV7InstanceSegmentationParam())
         else:
-            self.setParam(copy.deepcopy(param))
+            self.set_param_object(copy.deepcopy(param))
 
-    def getProgressSteps(self):
+    def get_progress_steps(self):
         # Function returning the number of progress steps for this process
         # This is handled by the main progress bar of Ikomia application
         return 1
 
     def run(self):
-        param = self.getParam()
-        dataset_input = self.getInput(0)
+        param = self.get_param_object()
+        dataset_input = self.get_input(0)
 
         # Conversion from Ikomia dataset to YoloV5
         print("Preparing dataset...")
@@ -125,17 +125,17 @@ class TrainYoloV7InstanceSegmentation(dnntrain.TrainProcess):
         print("Collecting configuration parameters...")
         self.opt = self.load_config(dataset_yaml)
 
-        # Call beginTaskRun for initialization
-        self.beginTaskRun()
+        # Call begin_task_run for initialization
+        self.begin_task_run()
 
         print("Start training...")
         self.start_training()
 
-        # Call endTaskRun to finalize process
-        self.endTaskRun()
+        # Call end_task_run to finalize process
+        self.end_task_run()
 
     def load_config(self, dataset_yaml):
-        param = self.getParam()
+        param = self.get_param_object()
 
         if len(sys.argv) == 0:
             sys.argv = ["ikomia"]
@@ -225,7 +225,7 @@ class TrainYoloV7InstanceSegmentation(dnntrain.TrainProcess):
         return opt
 
     def start_training(self):
-        param = self.getParam()
+        param = self.get_param_object()
         # Set DDP variables
         self.opt.world_size = int(os.environ['WORLD_SIZE']) if 'WORLD_SIZE' in os.environ else 1
         self.opt.global_rank = int(os.environ['RANK']) if 'RANK' in os.environ else -1
@@ -390,7 +390,7 @@ class TrainYoloV7InstanceSegmentation(dnntrain.TrainProcess):
 
     def on_epoch_end(self, metrics, epoch):
         # Step progress bar:
-        self.emitStepProgress()
+        self.emit_step_progress()
         metrics = self.conform_metrics(metrics)
         self.log_metrics(metrics, epoch)
 
@@ -405,20 +405,20 @@ class TrainYoloV7InstanceSegmentationFactory(dataprocess.CTaskFactory):
         dataprocess.CTaskFactory.__init__(self)
         # Set process information as string here
         self.info.name = "train_yolo_v7_instance_segmentation"
-        self.info.shortDescription = "Train for YOLO v7 instance segmentation models"
+        self.info.short_description = "Train for YOLO v7 instance segmentation models"
         self.info.description = "Train for YOLO v7 instance segmentation models"
         # relative path -> as displayed in Ikomia application process tree
         self.info.path = "Plugins/Python/Instance Segmentation"
-        self.info.iconPath = "icons/yolov7.png"
-        self.info.version = "1.0.0"
-        # self.info.iconPath = "your path to a specific icon"
+        self.info.icon_path = "icons/yolov7.png"
+        self.info.version = "1.1.0"
+        # self.info.icon_path = "your path to a specific icon"
         self.info.authors = "Wang, Chien-Yao and Bochkovskiy, Alexey and Liao, Hong-Yuan Mark"
         self.info.article = "YOLOv7: Trainable bag-of-freebies sets new state-of-the-art for real-time object detectors"
         self.info.journal = "arXiv preprint arXiv:2207.02696"
         self.info.year = 2022
         self.info.license = "GPL-3.0"
         # URL of documentation
-        self.info.documentationLink = "https://github.com/WongKinYiu/yolov7/tree/u7/seg"
+        self.info.documentation_link = "https://github.com/WongKinYiu/yolov7/tree/u7/seg"
         # Code source repository
         self.info.repository = "https://github.com/WongKinYiu/yolov7/tree/u7/seg"
         # Keywords used for search
