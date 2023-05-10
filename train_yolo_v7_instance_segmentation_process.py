@@ -72,7 +72,7 @@ class TrainYoloV7InstanceSegmentationParam(TaskParam):
         self.cfg["train_imgsz"] = 640
         self.cfg["test_imgsz"] = 640
         self.cfg["dataset_split_ratio"] = 90
-        self.cfg["config"] = ""
+        self.cfg["config_file"] = ""
         self.cfg["output_folder"] = os.path.dirname(os.path.realpath(__file__)) + "/runs/"
 
     def set_values(self, param_map):
@@ -85,7 +85,7 @@ class TrainYoloV7InstanceSegmentationParam(TaskParam):
         self.cfg["train_imgsz"] = int(param_map["train_imgsz"])
         self.cfg["test_imgsz"] = int(param_map["test_imgsz"])
         self.cfg["dataset_split_ratio"] = int(param_map["dataset_split_ratio"])
-        self.cfg["config"] = param_map["config"]
+        self.cfg["config_file"] = param_map["config_file"]
         self.cfg["output_folder"] = param_map["output_folder"]
 
 
@@ -198,8 +198,8 @@ class TrainYoloV7InstanceSegmentation(dnntrain.TrainProcess):
         opt.data = dataset_yaml
 
         # Override with GUI parameters
-        if param.cfg["config"]:
-            opt.hyp = param.cfg["config"]
+        if param.cfg["config_file"]:
+            opt.hyp = param.cfg["config_file"]
         else:
             opt.hyp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "yolov7", opt.hyp)
 
@@ -269,7 +269,7 @@ class TrainYoloV7InstanceSegmentation(dnntrain.TrainProcess):
         with open(self.opt.hyp) as f:
             hyp = yaml.load(f, Loader=yaml.SafeLoader)  # load hyps
 
-        if not param.cfg["config"]:
+        if not param.cfg["config_file"]:
             nbs = 64  # nominal batch size
             hyp["lr0"] = hyp["lr0"] / nbs * self.opt.batch_size
 
