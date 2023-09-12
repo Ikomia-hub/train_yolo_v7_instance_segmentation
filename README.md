@@ -19,10 +19,9 @@
     </a> 
 </p>
 
-Train for YOLO v7 instance segmentation models
+Train for YOLO v7 instance segmentation models.
 
-[Insert illustrative image here. Image must be accessible publicly, in algorithm Github repository for example.
-<img src="images/illustration.png"  alt="Illustrative image" width="30%" height="30%">]
+![Baseball yolov7 segmentation illustration](https://github.com/WongKinYiu/yolov7/raw/main/figure/mask.png)
 
 ## :rocket: Use with Ikomia API
 
@@ -35,21 +34,26 @@ pip install ikomia
 ```
 
 #### 2. Create your workflow
-
-[Change the sample image URL to fit algorithm purpose]
-
 ```python
-import ikomia
 from ikomia.dataprocess.workflow import Workflow
 
 # Init your workflow
-wf = Workflow()
+wf = Workflow()    
 
-# Add algorithm
-algo = wf.add_task(name="train_yolo_v7_instance_segmentation", auto_connect=True)
+# Add dataset loader
+coco = wf.add_task(name="dataset_coco")
 
-# Run on your image  
-wf.run_on(url="example_image.png")
+coco.set_parameters({
+    "json_file": "path/to/json/annotation/file",
+    "image_folder": "path/to/image/folder",
+    "task": "instance_segmentation",
+}) 
+
+# Add training algorithm
+train = wf.add_task(name="train_yolo_v7_instance_segmentation", auto_connect=True)
+
+# Launch your training on your data
+wf.run()
 ```
 
 ## :sunny: Use with Ikomia Studio
@@ -62,56 +66,44 @@ Ikomia Studio offers a friendly UI with the same features as the API.
 
 ## :pencil: Set algorithm parameters
 
-[Explain each algorithm parameters]
 
-[Change the sample image URL to fit algorithm purpose]
+- **train_imgsz** (int) - default '640': Size of the training image.
+- **test_imgsz** (int) - default '640': Size of the eval image.
+- **epochs** (int) - default '10': Number of complete passes through the training dataset.
+- **batch_size** (int) - default '16': Number of samples processed before the model is updated.
+- **dataset_split_ratio** (float) – default '0.9': Divide the dataset into train and evaluation sets ]0, 1[.
+- **output_folder** (str, *optional*): path to where the model will be saved. 
+- **config_file** (str, *optional*): Path to hyperparameters configuration file .yaml. 
+
+**Parameters** should be in **strings format**  when added to the dictionary.
+
 
 ```python
-import ikomia
 from ikomia.dataprocess.workflow import Workflow
 
 # Init your workflow
-wf = Workflow()
+wf = Workflow()    
 
-# Add algorithm
-algo = wf.add_task(name="train_yolo_v7_instance_segmentation", auto_connect=True)
+# Add dataset loader
+coco = wf.add_task(name="dataset_coco")
 
-algo.set_parameters({
-    "param1": "value1",
-    "param2": "value2",
-    ...
+coco.set_parameters({
+    "json_file": "C:/Users/allan/OneDrive/Desktop/ik-desktop/Images/datasets/wgisd/coco_annotations/test_polygons_instances.json",
+    "image_folder": "C:/Users/allan/OneDrive/Desktop/ik-desktop/Images/datasets/wgisd/data",
+    "task": "instance_segmentation",
+}) 
+
+# Add training algorithm
+train = wf.add_task(name="train_yolo_v7_instance_segmentation", auto_connect=True)
+train.set_parameters({
+    "batch_size": "4",
+    "epochs": "5",
+    "train_imgsz": "640",
+    "test_imgsz": "640",
+    "dataset_split_ratio": "0.9"
 })
 
-# Run on your image  
-wf.run_on(url="example_image.png")
-
+# Launch your training on your data
+wf.run()
 ```
 
-## :mag: Explore algorithm outputs
-
-Every algorithm produces specific outputs, yet they can be explored them the same way using the Ikomia API. For a more in-depth understanding of managing algorithm outputs, please refer to the [documentation](https://ikomia-dev.github.io/python-api-documentation/advanced_guide/IO_management.html).
-
-```python
-import ikomia
-from ikomia.dataprocess.workflow import Workflow
-
-# Init your workflow
-wf = Workflow()
-
-# Add algorithm
-algo = wf.add_task(name="train_yolo_v7_instance_segmentation", auto_connect=True)
-
-# Run on your image  
-wf.run_on(url="example_image.png")
-
-# Iterate over outputs
-for output in algo.get_outputs()
-    # Print information
-    print(output)
-    # Export it to JSON
-    output.to_json()
-```
-
-## :fast_forward: Advanced usage 
-
-[optional]
