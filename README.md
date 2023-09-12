@@ -66,7 +66,6 @@ Ikomia Studio offers a friendly UI with the same features as the API.
 
 ## :pencil: Set algorithm parameters
 
-
 - **train_imgsz** (int) - default '640': Size of the training image.
 - **test_imgsz** (int) - default '640': Size of the eval image.
 - **epochs** (int) - default '10': Number of complete passes through the training dataset.
@@ -88,8 +87,8 @@ wf = Workflow()
 coco = wf.add_task(name="dataset_coco")
 
 coco.set_parameters({
-    "json_file": "C:/Users/allan/OneDrive/Desktop/ik-desktop/Images/datasets/wgisd/coco_annotations/test_polygons_instances.json",
-    "image_folder": "C:/Users/allan/OneDrive/Desktop/ik-desktop/Images/datasets/wgisd/data",
+    "json_file": "path/to/json/annotation/file",
+    "image_folder": "path/to/image/folder",
     "task": "instance_segmentation",
 }) 
 
