@@ -71,7 +71,7 @@ Ikomia Studio offers a friendly UI with the same features as the API.
 - **test_imgsz** (int) - default '640': Size of the eval image.
 - **epochs** (int) - default '10': Number of complete passes through the training dataset.
 - **batch_size** (int) - default '16': Number of samples processed before the model is updated.
-- **dataset_split_ratio** (float) – default '0.9': Divide the dataset into train and evaluation sets ]0, 1[.
+- **dataset_split_ratio** (float) – default '90': Divide the dataset into train and evaluation sets ]0, 100[.
 - **output_folder** (str, *optional*): path to where the model will be saved. 
 - **config_file** (str, *optional*): Path to hyperparameters configuration file .yaml. 
 
@@ -100,7 +100,7 @@ train.set_parameters({
     "epochs": "5",
     "train_imgsz": "640",
     "test_imgsz": "640",
-    "dataset_split_ratio": "0.9"
+    "dataset_split_ratio": "90"
 })
 
 # Launch your training on your data
