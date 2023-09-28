@@ -406,7 +406,6 @@ class TrainYoloV7InstanceSegmentationFactory(dataprocess.CTaskFactory):
         # Set process information as string here
         self.info.name = "train_yolo_v7_instance_segmentation"
         self.info.short_description = "Train for YOLO v7 instance segmentation models"
-        self.info.description = "Train for YOLO v7 instance segmentation models"
         # relative path -> as displayed in Ikomia application process tree
         self.info.path = "Plugins/Python/Instance Segmentation"
         self.info.icon_path = "icons/yolov7.png"
@@ -420,7 +419,8 @@ class TrainYoloV7InstanceSegmentationFactory(dataprocess.CTaskFactory):
         # URL of documentation
         self.info.documentation_link = "https://github.com/WongKinYiu/yolov7/tree/u7/seg"
         # Code source repository
-        self.info.repository = "https://github.com/WongKinYiu/yolov7/tree/u7/seg"
+        self.info.repository = "https://github.com/Ikomia-hub/train_yolo_v7_instance_segmentation"
+        self.info.original_repository = "https://github.com/WongKinYiu/yolov7/tree/u7/seg"
         # Keywords used for search
         self.info.keywords = "train, yolo, instance, segmentation, coco"
 
