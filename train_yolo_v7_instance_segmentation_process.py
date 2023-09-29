@@ -423,6 +423,8 @@ class TrainYoloV7InstanceSegmentationFactory(dataprocess.CTaskFactory):
         self.info.original_repository = "https://github.com/WongKinYiu/yolov7/tree/u7/seg"
         # Keywords used for search
         self.info.keywords = "train, yolo, instance, segmentation, coco"
+        self.info.algo_type = core.AlgoType.TRAIN
+        self.info.algo_tasks = "INSTANCE_SEGMENTATION"
 
     def create(self, param=None):
         # Create process object
