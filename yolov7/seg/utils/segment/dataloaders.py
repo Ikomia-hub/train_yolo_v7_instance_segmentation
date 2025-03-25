@@ -280,7 +280,7 @@ def polygon2mask(img_size, polygons, color=1, downsample_ratio=1):
     """
     mask = np.zeros(img_size, dtype=np.uint8)
     polygons = np.asarray(polygons)
-    polygons = polygons.astype(np.int32)
+    polygons = polygons.astype(int32)
     shape = polygons.shape
     polygons = polygons.reshape(shape[0], -1, 2)
     cv2.fillPoly(mask, polygons, color=color)
